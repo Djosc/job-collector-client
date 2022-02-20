@@ -24,7 +24,7 @@ function App() {
 				setJobArr({
 					jobArr: data.data,
 				});
-				console.log(jobArr.jobArr[0].title);
+				setTimeout(console.log(jobArr.jobArr[0].title), 5000);
 			})
 			.catch((err) => console.log(err));
 	};
