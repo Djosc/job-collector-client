@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
+import MainList from './components/MainList';
 import axios from 'axios';
 import './App.css';
 
 function App() {
-	const [jobArr, setJobArr] = useState([]);
+	const [jobArr, setJobArr] = useState(null);
 
 	const getJobs = async ({ jobString, cityString, radius, sort, numberOfPages }) => {
 		const jobsEndpoint = 'http://localhost:8080/indeedJobs';
@@ -20,11 +21,11 @@ function App() {
 		axios
 			.get(queryUrl)
 			.then((data) => {
-				console.log(data.data);
+				// console.log(data.data);
 				setJobArr({
 					jobArr: data.data,
 				});
-				setTimeout(console.log(jobArr.jobArr[0].title), 5000);
+				// setTimeout(console.log(jobArr[0].title), 5000);
 			})
 			.catch((err) => console.log(err));
 	};
@@ -32,6 +33,7 @@ function App() {
 	return (
 		<div className="App">
 			<SearchBar getJobs={getJobs} />
+			{jobArr !== null ? <MainList jobArr={jobArr} /> : <></>}
 		</div>
 	);
 }
