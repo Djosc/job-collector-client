@@ -64,7 +64,12 @@ const SearchBar = (props) => {
 						</Button>
 					</Col>
 				</Row>
-				<Row md="auto" sm="auto" lg="auto" className="justify-content-start px-2 mx-2">
+				<Row
+					md="auto"
+					sm="auto"
+					lg="auto"
+					className="justify-content-start px-2 mx-2 mb-3"
+				>
 					<Col>
 						<Form.Label>Search Radius</Form.Label>
 						<Form.Select
