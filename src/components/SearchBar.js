@@ -68,8 +68,9 @@ const SearchBar = (props) => {
 					md="auto"
 					sm="auto"
 					lg="auto"
-					className="justify-content-start px-2 mx-2 mb-3"
+					className="justify-content-between px-2 mx-2 mb-3"
 				>
+					{/* <div className="bar-inputs-left"> */}
 					<Col>
 						<Form.Label>Search Radius</Form.Label>
 						<Form.Select
@@ -111,6 +112,32 @@ const SearchBar = (props) => {
 							<option value="5">5</option>
 						</Form.Select>
 					</Col>
+					{/* </div> */}
+					{/* buttons are not centered on some screen sizes */}
+					<div className="bar-buttons-right d-flex text-center align-items-center mt-3">
+						<Col>
+							<Button
+								variant="primary"
+								size="lg"
+								type="submit"
+								className=""
+								style={{ minWidth: 'max-content' }}
+							>
+								Watch List
+							</Button>
+						</Col>
+						<Col>
+							<Button
+								variant="primary"
+								size="lg"
+								type="submit"
+								className=""
+								style={{ minWidth: 'max-content' }}
+							>
+								Export to CSV
+							</Button>
+						</Col>
+					</div>
 				</Row>
 			</Container>
 		</div>
