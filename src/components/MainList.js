@@ -36,10 +36,11 @@ const MainList = (props) => {
 									>
 										View Full Job
 									</Button>
-									<Button className="mx-3">
+									{/* Conditionally render these based on state */}
+									<Button className="mx-3" onClick={() => props.addJob(job)}>
 										<BsFillEyeFill style={{ fontSize: '30px' }} />
 									</Button>
-									<Button className="mx-3">
+									<Button className="mx-3" onClick={() => props.removeJob(job)}>
 										<BsFillEyeSlashFill style={{ fontSize: '30px' }} />
 									</Button>
 								</div>
