@@ -23,7 +23,6 @@ const MainList = (props) => {
 								<Card.Subtitle className="py-1 mb-2">{job.location}</Card.Subtitle>
 								<Card.Text className="w-75">{job.description}</Card.Text>
 							</Card.Body>
-							{/* <Card.Body className="d-flex justify-content-end"> */}
 							<Card.Body className="d-flex justify-content-between">
 								<div>
 									<span>{job.tags}</span>
@@ -36,20 +35,24 @@ const MainList = (props) => {
 									>
 										View Full Job
 									</Button>
-									<Button className="mx-3">
-										<BsFillEyeFill style={{ fontSize: '30px' }} />
-									</Button>
-									<Button className="mx-3">
-										<BsFillEyeSlashFill style={{ fontSize: '30px' }} />
-									</Button>
+									{props.checkWatchedArr(job) ? (
+										<Button
+											className="mx-3"
+											onClick={() => props.removeJob(job)}
+											style={{ backgroundColor: 'red' }}
+										>
+											<BsFillEyeSlashFill style={{ fontSize: '30px' }} />
+										</Button>
+									) : (
+										<Button className="mx-3" onClick={() => props.addJob(job)}>
+											<BsFillEyeFill style={{ fontSize: '30px' }} />
+										</Button>
+									)}
 								</div>
 							</Card.Body>
 							<Card.Footer>{job.postDate}</Card.Footer>
 						</Card>
 					</Col>
-					{/* <Col className="text-center d-flex justify-content-center align-items-center">
-						<div></div>
-					</Col> */}
 				</Row>
 			))}
 		</Container>
