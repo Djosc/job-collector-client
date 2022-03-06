@@ -7,6 +7,7 @@ import './App.css';
 function App() {
 	const [jobArr, setJobArr] = useState(null);
 	const [watchedArr, setWatchedArr] = useState(null);
+	const [effectTrigger, setEffectTrigger] = useState(false);
 
 	useEffect(() => {
 		// Read from backend db.json file and populate watchedArr on first render
@@ -20,7 +21,7 @@ function App() {
 				});
 			})
 			.catch((err) => console.log(err));
-	}, []);
+	}, [effectTrigger]);
 
 	const getJobs = async ({ jobString, cityString, radius, sort, numberOfPages }) => {
 		const jobsEndpoint = 'http://localhost:8080/indeedJobs';
@@ -47,14 +48,11 @@ function App() {
 		const { description } = job;
 
 		for (const item of watchedArr.watchedArr) {
-			// console.log(item);
-			// console.log(item.description);
 			if (description.includes(item.description)) {
 				return true;
-			} else {
-				return false;
 			}
 		}
+		return false;
 	};
 
 	const addJob = async (job) => {
@@ -67,11 +65,8 @@ function App() {
 			description: job.description,
 			linkToFullJob: job.linkToFullJob,
 		});
-		// if (data.data === 'Entry added successfully') {
-		// 	setWatchedArr({ watchedArr: [...watchedArr.watchedArr, job] });
-		// }
+		setEffectTrigger(!effectTrigger);
 		console.log(data);
-		// console.log(watchedArr);
 	};
 
 	const removeJob = async (job) => {
@@ -86,16 +81,8 @@ function App() {
 				linkToFullJob: job.linkToFullJob,
 			},
 		});
-		// const { description } = job;
-		// for (const [idx, item] of watchedArr.watchedArr.entries()) {
-		// 	if (description.includes(item.description)) {
-		// 		watchedArr.watchedArr.splice(idx, 1);
-		// 		setWatchedArr(watchedArr);
-		// 	} else {
-		// 	}
-		// }
+		setEffectTrigger(!effectTrigger);
 		console.log(data);
-		// console.log(watchedArr);
 	};
 
 	return (

@@ -120,7 +120,7 @@ const SearchBar = (props) => {
 								variant="primary"
 								size="lg"
 								type="submit"
-								className=""
+								className="mx-2"
 								style={{ minWidth: 'max-content' }}
 							>
 								Watch List
@@ -131,7 +131,7 @@ const SearchBar = (props) => {
 								variant="primary"
 								size="lg"
 								type="submit"
-								className=""
+								className="mx-2"
 								style={{ minWidth: 'max-content' }}
 							>
 								Export to CSV

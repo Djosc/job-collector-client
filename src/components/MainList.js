@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
@@ -36,8 +35,6 @@ const MainList = (props) => {
 									>
 										View Full Job
 									</Button>
-									{/* Conditionally render these based on state idk how*/}
-									{/* {console.log(props.watchedArr)} */}
 									{props.checkWatchedArr(job) ? (
 										<Button
 											className="mx-3"
@@ -51,24 +48,11 @@ const MainList = (props) => {
 											<BsFillEyeFill style={{ fontSize: '30px' }} />
 										</Button>
 									)}
-									{/* <Button className="mx-3" onClick={() => props.addJob(job)}>
-										<BsFillEyeFill style={{ fontSize: '30px' }} />
-									</Button>
-									<Button
-										className="mx-3"
-										onClick={() => props.removeJob(job)}
-										style={{ backgroundColor: 'red' }}
-									>
-										<BsFillEyeSlashFill style={{ fontSize: '30px' }} />
-									</Button> */}
 								</div>
 							</Card.Body>
 							<Card.Footer>{job.postDate}</Card.Footer>
 						</Card>
 					</Col>
-					{/* <Col className="text-center d-flex justify-content-center align-items-center">
-						<div></div>
-					</Col> */}
 				</Row>
 			))}
 		</Container>
