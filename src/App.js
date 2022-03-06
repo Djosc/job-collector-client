@@ -101,23 +101,26 @@ function App() {
 				<SearchBar getJobs={getJobs} />
 				<Routes>
 					<Route path="/" element={<></>}></Route>
-					{/* {jobArr !== null ? ( */}
-					<Route
-						path="/mainList"
-						element={
-							<MainList
-								jobArr={jobArr}
-								watchedArr={watchedArr}
-								checkWatchedArr={checkWatchedArr}
-								addJob={addJob}
-								removeJob={removeJob}
-								openFullJob={openFullJob}
-							/>
-						}
-					></Route>
-					{/* ) : (
-					 	<></>
-					 )} */}
+					{/* Check if job array is populated.
+					 When it is, render list; otherwise render nothing and wait */}
+					{jobArr !== null ? (
+						<Route
+							path="/mainList"
+							element={
+								<MainList
+									jobArr={jobArr}
+									watchedArr={watchedArr}
+									checkWatchedArr={checkWatchedArr}
+									addJob={addJob}
+									removeJob={removeJob}
+									markAsApplied={markAsApplied}
+									openFullJob={openFullJob}
+								/>
+							}
+						></Route>
+					) : (
+						<Route path="/mainList" element={<></>}></Route>
+					)}
 					{watchedArr !== null ? (
 						<Route
 							path="/watchList"

@@ -26,7 +26,7 @@ const WatchList = (props) => {
 								<div>
 									<Button
 										variant="primary"
-										className="mx-3 px-3 py-2"
+										className="mx-1 px-3 py-2"
 										onClick={() => props.openFullJob(job.linkToFullJob)}
 									>
 										View Full Job
