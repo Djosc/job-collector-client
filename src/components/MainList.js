@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
@@ -23,7 +24,6 @@ const MainList = (props) => {
 								<Card.Subtitle className="py-1 mb-2">{job.location}</Card.Subtitle>
 								<Card.Text className="w-75">{job.description}</Card.Text>
 							</Card.Body>
-							{/* <Card.Body className="d-flex justify-content-end"> */}
 							<Card.Body className="d-flex justify-content-between">
 								<div>
 									<span>{job.tags}</span>
@@ -36,13 +36,31 @@ const MainList = (props) => {
 									>
 										View Full Job
 									</Button>
-									{/* Conditionally render these based on state */}
-									<Button className="mx-3" onClick={() => props.addJob(job)}>
+									{/* Conditionally render these based on state idk how*/}
+									{/* {console.log(props.watchedArr)} */}
+									{props.checkWatchedArr(job) ? (
+										<Button
+											className="mx-3"
+											onClick={() => props.removeJob(job)}
+											style={{ backgroundColor: 'red' }}
+										>
+											<BsFillEyeSlashFill style={{ fontSize: '30px' }} />
+										</Button>
+									) : (
+										<Button className="mx-3" onClick={() => props.addJob(job)}>
+											<BsFillEyeFill style={{ fontSize: '30px' }} />
+										</Button>
+									)}
+									{/* <Button className="mx-3" onClick={() => props.addJob(job)}>
 										<BsFillEyeFill style={{ fontSize: '30px' }} />
 									</Button>
-									<Button className="mx-3" onClick={() => props.removeJob(job)}>
+									<Button
+										className="mx-3"
+										onClick={() => props.removeJob(job)}
+										style={{ backgroundColor: 'red' }}
+									>
 										<BsFillEyeSlashFill style={{ fontSize: '30px' }} />
-									</Button>
+									</Button> */}
 								</div>
 							</Card.Body>
 							<Card.Footer>{job.postDate}</Card.Footer>

@@ -43,6 +43,20 @@ function App() {
 			.catch((err) => console.log(err));
 	};
 
+	const checkWatchedArr = (job) => {
+		const { description } = job;
+
+		for (const item of watchedArr.watchedArr) {
+			// console.log(item);
+			// console.log(item.description);
+			if (description.includes(item.description)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	};
+
 	const addJob = async (job) => {
 		const data = await axios.post('http://localhost:8080/addJob', {
 			title: job.title,
@@ -53,7 +67,11 @@ function App() {
 			description: job.description,
 			linkToFullJob: job.linkToFullJob,
 		});
+		// if (data.data === 'Entry added successfully') {
+		// 	setWatchedArr({ watchedArr: [...watchedArr.watchedArr, job] });
+		// }
 		console.log(data);
+		// console.log(watchedArr);
 	};
 
 	const removeJob = async (job) => {
@@ -68,14 +86,29 @@ function App() {
 				linkToFullJob: job.linkToFullJob,
 			},
 		});
+		// const { description } = job;
+		// for (const [idx, item] of watchedArr.watchedArr.entries()) {
+		// 	if (description.includes(item.description)) {
+		// 		watchedArr.watchedArr.splice(idx, 1);
+		// 		setWatchedArr(watchedArr);
+		// 	} else {
+		// 	}
+		// }
 		console.log(data);
+		// console.log(watchedArr);
 	};
 
 	return (
 		<div className="App">
 			<SearchBar getJobs={getJobs} />
 			{jobArr !== null ? (
-				<MainList jobArr={jobArr} addJob={addJob} removeJob={removeJob} />
+				<MainList
+					jobArr={jobArr}
+					watchedArr={watchedArr}
+					checkWatchedArr={checkWatchedArr}
+					addJob={addJob}
+					removeJob={removeJob}
+				/>
 			) : (
 				<></>
 			)}
