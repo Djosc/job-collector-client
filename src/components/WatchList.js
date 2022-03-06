@@ -3,13 +3,13 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
-const MainList = (props) => {
-	const { jobArr } = props;
+const WatchList = (props) => {
+	const { watchedArr } = props;
 
 	return (
 		<Container fluid className="px-4">
-			<h1 className="text-center my-4">Job Results</h1>
-			{jobArr.jobArr.map((job, index) => (
+			<h1 className="text-center my-4">Watched Jobs</h1>
+			{watchedArr.watchedArr.map((job, index) => (
 				<Row className="justify-content-center" key={index}>
 					<Col md={10} className="">
 						<Card className="my-3">
@@ -55,4 +55,4 @@ const MainList = (props) => {
 	);
 };
 
-export default MainList;
+export default WatchList;

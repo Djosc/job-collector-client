@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, FloatingLabel, Button, Row, Col, Container } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SearchBar = (props) => {
 	const [jobString, setJobString] = useState('');
@@ -7,6 +8,8 @@ const SearchBar = (props) => {
 	const [radius, setRadius] = useState('25');
 	const [sort, setSort] = useState('relevance');
 	const [numberOfPages, setNumberOfPages] = useState('1');
+
+	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -17,6 +20,7 @@ const SearchBar = (props) => {
 			sort: sort,
 			numberOfPages: numberOfPages,
 		});
+		navigate('/mainList');
 	};
 
 	return (
@@ -52,16 +56,18 @@ const SearchBar = (props) => {
 						</FloatingLabel>
 					</Col>
 					<Col sm={6} md={2} className="">
-						<Button
-							variant="primary"
-							size="lg"
-							type="submit"
-							onClick={handleSubmit}
-							className="mb-2"
-							style={{ minWidth: '80%' }}
-						>
-							Search
-						</Button>
+						<Link to="/mainList">
+							<Button
+								variant="primary"
+								size="lg"
+								type="submit"
+								onClick={handleSubmit}
+								className="mb-2"
+								style={{ minWidth: '80%' }}
+							>
+								Search
+							</Button>
+						</Link>
 					</Col>
 				</Row>
 				<Row
@@ -116,15 +122,30 @@ const SearchBar = (props) => {
 					{/* buttons are not centered on some screen sizes */}
 					<div className="bar-buttons-right d-flex text-center align-items-center mt-3">
 						<Col>
-							<Button
-								variant="primary"
-								size="lg"
-								type="submit"
-								className="mx-2"
-								style={{ minWidth: 'max-content' }}
-							>
-								Watch List
-							</Button>
+							<Link to="/mainList">
+								<Button
+									variant="primary"
+									size="lg"
+									type="submit"
+									className="mx-2"
+									style={{ minWidth: 'max-content' }}
+								>
+									Jobs
+								</Button>
+							</Link>
+						</Col>
+						<Col>
+							<Link to="/watchList">
+								<Button
+									variant="primary"
+									size="lg"
+									type="submit"
+									className="mx-2"
+									style={{ minWidth: 'max-content' }}
+								>
+									Watched
+								</Button>
+							</Link>
 						</Col>
 						<Col>
 							<Button

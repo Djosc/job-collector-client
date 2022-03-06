@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import SearchBar from './components/SearchBar';
 import MainList from './components/MainList';
-import axios from 'axios';
+import WatchList from './components/WatchList';
+
 import './App.css';
 
 function App() {
@@ -85,20 +90,52 @@ function App() {
 		console.log(data);
 	};
 
+	const openFullJob = (link) => {
+		const url = link;
+		window.open(url, '_blank');
+	};
+
 	return (
 		<div className="App">
-			<SearchBar getJobs={getJobs} />
-			{jobArr !== null ? (
-				<MainList
-					jobArr={jobArr}
-					watchedArr={watchedArr}
-					checkWatchedArr={checkWatchedArr}
-					addJob={addJob}
-					removeJob={removeJob}
-				/>
-			) : (
-				<></>
-			)}
+			<Router>
+				<SearchBar getJobs={getJobs} />
+				<Routes>
+					<Route path="/" element={<></>}></Route>
+					{/* {jobArr !== null ? ( */}
+					<Route
+						path="/mainList"
+						element={
+							<MainList
+								jobArr={jobArr}
+								watchedArr={watchedArr}
+								checkWatchedArr={checkWatchedArr}
+								addJob={addJob}
+								removeJob={removeJob}
+								openFullJob={openFullJob}
+							/>
+						}
+					></Route>
+					{/* ) : (
+					 	<></>
+					 )} */}
+					{watchedArr !== null ? (
+						<Route
+							path="/watchList"
+							element={
+								<WatchList
+									watchedArr={watchedArr}
+									checkWatchedArr={checkWatchedArr}
+									addJob={addJob}
+									removeJob={removeJob}
+									openFullJob={openFullJob}
+								/>
+							}
+						></Route>
+					) : (
+						<></>
+					)}
+				</Routes>
+			</Router>
 		</div>
 	);
 }
