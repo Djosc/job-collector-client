@@ -32,15 +32,34 @@ const WatchList = (props) => {
 										View Full Job
 									</Button>
 									{props.checkWatchedArr(job) ? (
-										<Button
-											className="mx-3"
-											onClick={() => props.removeJob(job)}
-											style={{ backgroundColor: 'red' }}
-										>
-											<BsFillEyeSlashFill style={{ fontSize: '28px' }} />
-										</Button>
+										<>
+											{props.checkApplied(job) ? (
+												<Button
+													variant="success"
+													className="mx-2 px-3 py-2"
+													onClick={() => props.unmarkApplied(job)}
+												>
+													Applied
+												</Button>
+											) : (
+												<Button
+													variant="primary"
+													className="mx-2 px-3 py-2"
+													onClick={() => props.markApplied(job)}
+												>
+													Not Applied
+												</Button>
+											)}
+											<Button
+												className="mx-2"
+												onClick={() => props.removeJob(job)}
+												style={{ backgroundColor: 'red' }}
+											>
+												<BsFillEyeSlashFill style={{ fontSize: '28px' }} />
+											</Button>
+										</>
 									) : (
-										<Button className="mx-3" onClick={() => props.addJob(job)}>
+										<Button className="mx-2" onClick={() => props.addJob(job)}>
 											<BsFillEyeFill style={{ fontSize: '28px' }} />
 										</Button>
 									)}

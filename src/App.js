@@ -60,6 +60,18 @@ function App() {
 		return false;
 	};
 
+	const checkApplied = (job) => {
+		const { applied } = job;
+		console.log(job.applied);
+		for (const item of watchedArr.watchedArr) {
+			// console.log(item.applied);
+			if (applied === true) {
+				return true;
+			}
+		}
+		return false;
+	};
+
 	const addJob = async (job) => {
 		const data = await axios.post('http://localhost:8080/addJob', {
 			title: job.title,
@@ -69,6 +81,7 @@ function App() {
 			postDate: job.postDate,
 			description: job.description,
 			linkToFullJob: job.linkToFullJob,
+			applied: false,
 		});
 		setEffectTrigger(!effectTrigger);
 		console.log(data);
@@ -84,7 +97,26 @@ function App() {
 				postDate: job.postDate,
 				description: job.description,
 				linkToFullJob: job.linkToFullJob,
+				applied: false,
 			},
+		});
+		setEffectTrigger(!effectTrigger);
+		console.log(data);
+	};
+
+	const markApplied = async (job) => {
+		const data = await axios.put('http://localhost:8080/markApplied', {
+			description: job.description,
+			applied: false,
+		});
+		setEffectTrigger(!effectTrigger);
+		console.log(data);
+	};
+
+	const unmarkApplied = async (job) => {
+		const data = await axios.put('http://localhost:8080/unmarkApplied', {
+			description: job.description,
+			applied: true,
 		});
 		setEffectTrigger(!effectTrigger);
 		console.log(data);
@@ -111,9 +143,11 @@ function App() {
 									jobArr={jobArr}
 									watchedArr={watchedArr}
 									checkWatchedArr={checkWatchedArr}
+									checkApplied={checkApplied}
 									addJob={addJob}
 									removeJob={removeJob}
-									markAsApplied={markAsApplied}
+									markApplied={markApplied}
+									unmarkApplied={unmarkApplied}
 									openFullJob={openFullJob}
 								/>
 							}
@@ -128,8 +162,11 @@ function App() {
 								<WatchList
 									watchedArr={watchedArr}
 									checkWatchedArr={checkWatchedArr}
+									checkApplied={checkApplied}
 									addJob={addJob}
 									removeJob={removeJob}
+									markApplied={markApplied}
+									unmarkApplied={unmarkApplied}
 									openFullJob={openFullJob}
 								/>
 							}
