@@ -21,6 +21,9 @@ function App() {
 			.then((data) => {
 				console.log(data);
 				console.log(data.data.jobs);
+				return data;
+			})
+			.then((data) => {
 				setWatchedArr({
 					watchedArr: data.data.jobs,
 				});
@@ -62,12 +65,9 @@ function App() {
 
 	const checkApplied = (job) => {
 		const { applied } = job;
-		console.log(job.applied);
-		for (const item of watchedArr.watchedArr) {
-			// console.log(item.applied);
-			if (applied === true) {
-				return true;
-			}
+		// console.log(job.applied);
+		if (applied === true) {
+			return true;
 		}
 		return false;
 	};

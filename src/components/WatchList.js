@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
+import ConfirmModal from './ConfirmModal';
+
 const WatchList = (props) => {
+	const [modalShow, setModalShow] = useState(false);
+	const [modalJobData, setModalJobData] = useState(null);
+
 	const { watchedArr } = props;
 
 	return (
 		<Container fluid className="px-4">
+			{/* Using one instance of the modal outside the map function. 
+				It is given the current job via setModalJobData from within the map function */}
+			<ConfirmModal
+				show={modalShow}
+				onHide={() => setModalShow(false)}
+				rmvJob={() => props.removeJob(modalJobData)}
+			/>
 			<h1 className="text-center my-4">Watched Jobs</h1>
 			{watchedArr.watchedArr.map((job, index) => (
 				<Row className="justify-content-center" key={index}>
@@ -52,7 +64,11 @@ const WatchList = (props) => {
 											)}
 											<Button
 												className="mx-2"
-												onClick={() => props.removeJob(job)}
+												// Modal data is set and displayed from here
+												onClick={() => {
+													setModalJobData(job);
+													setModalShow(true);
+												}}
 												style={{ backgroundColor: 'red' }}
 											>
 												<BsFillEyeSlashFill style={{ fontSize: '28px' }} />
