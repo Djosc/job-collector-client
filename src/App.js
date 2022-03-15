@@ -21,6 +21,9 @@ function App() {
 			.then((data) => {
 				console.log(data);
 				console.log(data.data.jobs);
+				return data;
+			})
+			.then((data) => {
 				setWatchedArr({
 					watchedArr: data.data.jobs,
 				});
@@ -60,6 +63,15 @@ function App() {
 		return false;
 	};
 
+	const checkApplied = (job) => {
+		const { applied } = job;
+		// console.log(job.applied);
+		if (applied === true) {
+			return true;
+		}
+		return false;
+	};
+
 	const addJob = async (job) => {
 		const data = await axios.post('http://localhost:8080/addJob', {
 			title: job.title,
@@ -69,6 +81,7 @@ function App() {
 			postDate: job.postDate,
 			description: job.description,
 			linkToFullJob: job.linkToFullJob,
+			applied: false,
 		});
 		setEffectTrigger(!effectTrigger);
 		console.log(data);
@@ -84,7 +97,26 @@ function App() {
 				postDate: job.postDate,
 				description: job.description,
 				linkToFullJob: job.linkToFullJob,
+				applied: false,
 			},
+		});
+		setEffectTrigger(!effectTrigger);
+		console.log(data);
+	};
+
+	const markApplied = async (job) => {
+		const data = await axios.put('http://localhost:8080/markApplied', {
+			description: job.description,
+			applied: false,
+		});
+		setEffectTrigger(!effectTrigger);
+		console.log(data);
+	};
+
+	const unmarkApplied = async (job) => {
+		const data = await axios.put('http://localhost:8080/unmarkApplied', {
+			description: job.description,
+			applied: true,
 		});
 		setEffectTrigger(!effectTrigger);
 		console.log(data);
@@ -101,23 +133,28 @@ function App() {
 				<SearchBar getJobs={getJobs} />
 				<Routes>
 					<Route path="/" element={<></>}></Route>
-					{/* {jobArr !== null ? ( */}
-					<Route
-						path="/mainList"
-						element={
-							<MainList
-								jobArr={jobArr}
-								watchedArr={watchedArr}
-								checkWatchedArr={checkWatchedArr}
-								addJob={addJob}
-								removeJob={removeJob}
-								openFullJob={openFullJob}
-							/>
-						}
-					></Route>
-					{/* ) : (
-					 	<></>
-					 )} */}
+					{/* Check if job array is populated.
+					 When it is, render list; otherwise render nothing and wait */}
+					{jobArr !== null ? (
+						<Route
+							path="/mainList"
+							element={
+								<MainList
+									jobArr={jobArr}
+									watchedArr={watchedArr}
+									checkWatchedArr={checkWatchedArr}
+									checkApplied={checkApplied}
+									addJob={addJob}
+									removeJob={removeJob}
+									markApplied={markApplied}
+									unmarkApplied={unmarkApplied}
+									openFullJob={openFullJob}
+								/>
+							}
+						></Route>
+					) : (
+						<Route path="/mainList" element={<></>}></Route>
+					)}
 					{watchedArr !== null ? (
 						<Route
 							path="/watchList"
@@ -125,8 +162,11 @@ function App() {
 								<WatchList
 									watchedArr={watchedArr}
 									checkWatchedArr={checkWatchedArr}
+									checkApplied={checkApplied}
 									addJob={addJob}
 									removeJob={removeJob}
+									markApplied={markApplied}
+									unmarkApplied={unmarkApplied}
 									openFullJob={openFullJob}
 								/>
 							}
