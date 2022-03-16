@@ -14,13 +14,14 @@ const WatchList = (props) => {
 	return (
 		<Container fluid className="px-4">
 			{/* Using one instance of the modal outside the map function. 
-				It is given the current job via setModalJobData from within the map function */}
+				It is given the current job from within the map function via setModalJobData  */}
 			<ConfirmModal
 				show={modalShow}
 				onHide={() => setModalShow(false)}
 				rmvJob={() => props.removeJob(modalJobData)}
 			/>
 			<h1 className="text-center my-4">Watched Jobs</h1>
+
 			{watchedArr.watchedArr.map((job, index) => (
 				<Row className="justify-content-center" key={index}>
 					<Col md={10} className="">
