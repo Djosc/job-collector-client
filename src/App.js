@@ -164,7 +164,14 @@ function App() {
 							}
 						></Route>
 					) : (
-						<Route path="/mainList" element={<></>}></Route>
+						<Route
+							path="/mainList"
+							element={
+								<>
+									<h1 className="text-center my-4">Enter a Search</h1>
+								</>
+							}
+						></Route>
 					)}
 					{watchedArr !== null ? (
 						<Route
