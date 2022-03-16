@@ -20,10 +20,10 @@ const MainList = (props) => {
 								<Card.Text className="w-75">{job.description}</Card.Text>
 							</Card.Body>
 							<Card.Body className="d-flex justify-content-between">
-								<div>
+								<div className="main-card-tags-span">
 									<span>{job.tags}</span>
 								</div>
-								<div>
+								<div className="main-card-button-wrap">
 									<Button
 										variant="primary"
 										className="mx-3 px-3 py-2"
@@ -36,14 +36,14 @@ const MainList = (props) => {
 											If not, show add button */}
 									{props.checkWatchedArr(job) ? (
 										<Button
-											className="mx-3"
+											className="mx-3 my-1"
 											onClick={() => props.removeJob(job)}
 											style={{ backgroundColor: 'red' }}
 										>
 											<BsFillEyeSlashFill style={{ fontSize: '28px' }} />
 										</Button>
 									) : (
-										<Button className="mx-3" onClick={() => props.addJob(job)}>
+										<Button className="mx-3 my-1" onClick={() => props.addJob(job)}>
 											<BsFillEyeFill style={{ fontSize: '28px' }} />
 										</Button>
 									)}

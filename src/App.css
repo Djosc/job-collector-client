@@ -1,2 +1,45 @@
 .App {
+	background-color: #f2f2f2;
+}
+
+.search-bar-wrap {
+	background-color: #002642;
+}
+
+.form-label {
+	color: #fff;
+}
+
+.card {
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+	background-color: #002642;
+	color: #fff;
+}
+
+.card-footer {
+	background-color: #dddddd;
+}
+
+.btn-primary {
+	background-color: rgb(9, 114, 179);
+	border-color: rgb(9, 114, 179);
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+	background-color: rgb(0, 74, 121);
+	border-color: rgb(0, 74, 121);
+}
+
+.main-card-tags-span {
+	/* max-width: 30%; */
+}
+
+.main-card-button-wrap {
+	text-align: center;
 }

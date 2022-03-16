@@ -29,7 +29,7 @@ const SearchBar = (props) => {
 
 	return (
 		<div className="search-bar-wrap">
-			<Container fluid className="px-2">
+			<Container fluid className="px-2 py-2">
 				<Row className="justify-content-sm-center align-items-center text-center mt-4 mx-3">
 					<Col sm={6} md={5}>
 						<FloatingLabel

@@ -33,10 +33,10 @@ const WatchList = (props) => {
 								<Card.Text className="w-75">{job.description}</Card.Text>
 							</Card.Body>
 							<Card.Body className="d-flex justify-content-between">
-								<div>
+								<div className="main-card-tags-span">
 									<span>{job.tags}</span>
 								</div>
-								<div>
+								<div className="main-card-button-wrap">
 									<Button
 										variant="primary"
 										className="mx-1 px-3 py-2"
@@ -64,7 +64,7 @@ const WatchList = (props) => {
 												</Button>
 											)}
 											<Button
-												className="mx-2"
+												className="mx-2 my-1"
 												// Modal data is set and displayed from here
 												onClick={() => {
 													setModalJobData(job);
@@ -76,7 +76,7 @@ const WatchList = (props) => {
 											</Button>
 										</>
 									) : (
-										<Button className="mx-2" onClick={() => props.addJob(job)}>
+										<Button className="mx-2 my-1" onClick={() => props.addJob(job)}>
 											<BsFillEyeFill style={{ fontSize: '28px' }} />
 										</Button>
 									)}
