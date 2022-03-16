@@ -127,10 +127,21 @@ function App() {
 		window.open(url, '_blank');
 	};
 
+	const headers = [
+		{ label: 'Title', key: 'title' },
+		{ label: 'Company', key: 'company' },
+		{ label: 'Location', key: 'location' },
+		{ label: 'Tags', key: 'tags' },
+		{ label: 'Post Date', key: 'postDate' },
+		{ label: 'Description', key: 'description' },
+		{ label: 'Link to Job', key: 'linkToFullJob' },
+		{ label: 'Applied', key: 'applied' },
+	];
+
 	return (
 		<div className="App">
 			<Router>
-				<SearchBar getJobs={getJobs} />
+				<SearchBar getJobs={getJobs} watchedArr={watchedArr} headers={headers} />
 				<Routes>
 					<Route path="/" element={<></>}></Route>
 					{/* Check if job array is populated.

@@ -32,40 +32,9 @@ const MainList = (props) => {
 										View Full Job
 									</Button>
 
-									{/* <Button
-										variant="primary"
-										className="mx-1 px-3 py-2"
-										onClick={() => props.markApplied(job)}
-									>
-										Apply
-									</Button>
-									<Button
-										variant="primary"
-										className="mx-1 px-3 py-2"
-										onClick={() => props.unmarkApplied(job)}
-									>
-										Un-Apply
-									</Button> */}
-
+									{/* If job is in the watched array, show remove button. 
+											If not, show add button */}
 									{props.checkWatchedArr(job) ? (
-										// <>
-										// 	{props.checkApplied(job) ? (
-										// 		<Button
-										// 			variant="success"
-										// 			className="mx-1 px-3 py-2"
-										// 			onClick={() => props.unmarkApplied(job)}
-										// 		>
-										// 			Applied
-										// 		</Button>
-										// 	) : (
-										// 		<Button
-										// 			variant="primary"
-										// 			className="mx-1 px-3 py-2"
-										// 			onClick={() => props.markApplied(job)}
-										// 		>
-										// 			Not Applied
-										// 		</Button>
-										// 	)}
 										<Button
 											className="mx-3"
 											onClick={() => props.removeJob(job)}
@@ -74,7 +43,6 @@ const MainList = (props) => {
 											<BsFillEyeSlashFill style={{ fontSize: '28px' }} />
 										</Button>
 									) : (
-										// </>
 										<Button className="mx-3" onClick={() => props.addJob(job)}>
 											<BsFillEyeFill style={{ fontSize: '28px' }} />
 										</Button>

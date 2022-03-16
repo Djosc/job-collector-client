@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { Form, FloatingLabel, Button, Row, Col, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { CSVLink } from 'react-csv';
+
 const SearchBar = (props) => {
 	const [jobString, setJobString] = useState('');
 	const [cityString, setCityString] = useState('');
 	const [radius, setRadius] = useState('25');
 	const [sort, setSort] = useState('relevance');
 	const [numberOfPages, setNumberOfPages] = useState('1');
+
+	const { watchedArr, headers } = props;
 
 	const navigate = useNavigate();
 
@@ -76,7 +80,6 @@ const SearchBar = (props) => {
 					lg="auto"
 					className="justify-content-between px-2 mx-2 mb-3"
 				>
-					{/* <div className="bar-inputs-left"> */}
 					<Col>
 						<Form.Label>Search Radius</Form.Label>
 						<Form.Select
@@ -118,7 +121,7 @@ const SearchBar = (props) => {
 							<option value="5">5</option>
 						</Form.Select>
 					</Col>
-					{/* </div> */}
+
 					{/* buttons are not centered on some screen sizes */}
 					<div className="bar-buttons-right d-flex text-center align-items-center mt-3">
 						<Col>
@@ -148,15 +151,22 @@ const SearchBar = (props) => {
 							</Link>
 						</Col>
 						<Col>
-							<Button
-								variant="primary"
-								size="lg"
-								type="submit"
-								className="mx-2"
-								style={{ minWidth: 'max-content' }}
-							>
-								Export to CSV
-							</Button>
+							{/* Quick check here to let the watched array populate from a GET request */}
+							{watchedArr !== null ? (
+								<CSVLink data={watchedArr.watchedArr} headers={headers}>
+									<Button
+										variant="primary"
+										size="lg"
+										type="submit"
+										className="mx-2"
+										style={{ minWidth: 'max-content' }}
+									>
+										Export to CSV
+									</Button>
+								</CSVLink>
+							) : (
+								<></>
+							)}
 						</Col>
 					</div>
 				</Row>
