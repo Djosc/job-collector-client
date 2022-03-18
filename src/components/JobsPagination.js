@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
-const JobsPagination = ({ currentPage, setCurrentPage, totalPages, hasNextPage }) => {
+const JobsPagination = ({ currentPage, setCurrentPage, totalPages }) => {
 	const adjustPage = (amount) => {
 		setCurrentPage((prevPage) => prevPage + amount);
 	};

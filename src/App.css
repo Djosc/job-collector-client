@@ -37,12 +37,12 @@
 	border-color: rgb(0, 74, 121);
 }
 
-.main-card-tags-span {
-	/* max-width: 30%; */
-}
-
 .main-card-button-wrap {
 	text-align: center;
+}
+
+.page-link {
+	border: 1px solid #b1b1b1;
 }
 
 .pagination-wrap {
@@ -56,4 +56,18 @@
 	justify-content: center;
 	align-items: center;
 	margin-top: 3rem;
+}
+
+.icon-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 3rem;
+	margin-bottom: 1rem;
+}
+
+.up-icon {
+	font-size: 50px;
+	color: rgb(9, 114, 179);
+	cursor: pointer;
 }
