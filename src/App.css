@@ -23,7 +23,8 @@
 	background-color: #f2f2f2;
 }
 
-.btn-primary {
+.btn-primary,
+.page-item.active > .page-link {
 	background-color: rgb(9, 114, 179);
 	border-color: rgb(9, 114, 179);
 }

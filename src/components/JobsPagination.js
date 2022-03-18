@@ -1,9 +1,14 @@
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
-const JobsPagination = ({ currentPage, setCurrentPage, hasNextPage }) => {
+const JobsPagination = ({ currentPage, setCurrentPage, totalPages, hasNextPage }) => {
 	const adjustPage = (amount) => {
 		setCurrentPage((prevPage) => prevPage + amount);
+	};
+
+	const checkForNextPage = () => {
+		if (totalPages > currentPage) return true;
+		else return false;
 	};
 
 	return (
@@ -19,10 +24,10 @@ const JobsPagination = ({ currentPage, setCurrentPage, hasNextPage }) => {
 				</Pagination.Item>
 			)}
 			<Pagination.Item active>{currentPage}</Pagination.Item>
-			{hasNextPage && (
+			{checkForNextPage() && (
 				<Pagination.Item onClick={() => adjustPage(1)}>{currentPage + 1}</Pagination.Item>
 			)}
-			{hasNextPage && <Pagination.Next onClick={() => adjustPage(1)} />}
+			{checkForNextPage() && <Pagination.Next onClick={() => adjustPage(1)} />}
 		</Pagination>
 	);
 };

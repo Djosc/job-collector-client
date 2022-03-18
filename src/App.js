@@ -48,8 +48,7 @@ function App() {
 		queryUrl += '&sort=' + sort;
 		queryUrl += '&pages=' + numberOfPages;
 
-		setTotalPages({ numberOfPages });
-		console.log(totalPages);
+		setTotalPages(numberOfPages);
 
 		axios
 			.get(queryUrl)
@@ -72,6 +71,9 @@ function App() {
 		setCurrentJobsArr({
 			currentJobsArr: currentJobs,
 		});
+
+		let hasNextPageBool = totalPages > currentPage ? true : false;
+		setHasNextPage(hasNextPageBool);
 	};
 
 	// This will run when allJobsArr populates and when the current page changes
