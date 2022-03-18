@@ -6,12 +6,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import MainList from './components/MainList';
 import WatchList from './components/WatchList';
+import JobsPagination from './components/JobsPagination';
 
 import './App.css';
 
 function App() {
-	const [jobArr, setJobArr] = useState(null);
+	const [currentJobsArr, setCurrentJobsArr] = useState(null);
+	const [allJobsArr, setAllJobsArr] = useState(null);
 	const [watchedArr, setWatchedArr] = useState(null);
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
+	const [hasNextPage, setHasNextPage] = useState(true);
+	const [jobsPerPage, setJobsPerPage] = useState(15);
+
 	const [effectTrigger, setEffectTrigger] = useState(false);
 
 	useEffect(() => {
@@ -40,17 +48,42 @@ function App() {
 		queryUrl += '&sort=' + sort;
 		queryUrl += '&pages=' + numberOfPages;
 
-		// const qUrlEncoded = encodeURI(queryUrl);
+		setTotalPages(numberOfPages);
 
 		axios
 			.get(queryUrl)
 			.then((data) => {
-				setJobArr({
-					jobArr: data.data,
+				setAllJobsArr({
+					allJobsArr: data.data,
 				});
 			})
 			.catch((err) => console.log(err));
 	};
+
+	// Slice off one page of jobs and store it with setCurrentJobsArr
+	const setCurrentJobs = () => {
+		const indexOfLastJob = currentPage * jobsPerPage;
+		const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+		const currentJobs = allJobsArr.allJobsArr.slice(indexOfFirstJob, indexOfLastJob);
+
+		console.log(currentJobs);
+
+		setCurrentJobsArr({
+			currentJobsArr: currentJobs,
+		});
+
+		let hasNextPageBool = totalPages > currentPage ? true : false;
+		setHasNextPage(hasNextPageBool);
+	};
+
+	// This will run when allJobsArr populates and when the current page changes
+	useEffect(() => {
+		if (allJobsArr === null) return;
+
+		setCurrentJobs();
+	}, [allJobsArr, currentPage]);
+
+	const handlePageSwitch = ({ page }) => {};
 
 	const checkWatchedArr = (job) => {
 		const { description } = job;
@@ -143,35 +176,60 @@ function App() {
 			<Router>
 				<SearchBar getJobs={getJobs} watchedArr={watchedArr} headers={headers} />
 				<Routes>
-					<Route path="/" element={<></>}></Route>
+					<Route
+						path="/"
+						element={
+							<>
+								<h1 className="text-center my-4">Enter a Search</h1>
+							</>
+						}
+					></Route>
 					{/* Check if job array is populated.
 					 When it is, render list; otherwise render nothing and wait */}
-					{jobArr !== null ? (
-						<Route
-							path="/mainList"
-							element={
-								<MainList
-									jobArr={jobArr}
-									watchedArr={watchedArr}
-									checkWatchedArr={checkWatchedArr}
-									checkApplied={checkApplied}
-									addJob={addJob}
-									removeJob={removeJob}
-									markApplied={markApplied}
-									unmarkApplied={unmarkApplied}
-									openFullJob={openFullJob}
-								/>
-							}
-						></Route>
-					) : (
+					{currentJobsArr !== null ? (
 						<Route
 							path="/mainList"
 							element={
 								<>
-									<h1 className="text-center my-4">Enter a Search</h1>
+									<div className="pagination-wrap">
+										<div className="pagination-el">
+											<JobsPagination
+												currentPage={currentPage}
+												setCurrentPage={setCurrentPage}
+												totalPages={totalPages}
+												setTotalPages={setTotalPages}
+												hasNextPage={hasNextPage}
+											/>
+										</div>
+										<h1 className="text-center my-4">Job Results</h1>
+									</div>
+									<MainList
+										currentJobsArr={currentJobsArr}
+										watchedArr={watchedArr}
+										checkWatchedArr={checkWatchedArr}
+										checkApplied={checkApplied}
+										addJob={addJob}
+										removeJob={removeJob}
+										markApplied={markApplied}
+										unmarkApplied={unmarkApplied}
+										openFullJob={openFullJob}
+									/>
+									<div className="pagination-wrap">
+										<div className="pagination-el">
+											<JobsPagination
+												currentPage={currentPage}
+												setCurrentPage={setCurrentPage}
+												totalPages={totalPages}
+												setTotalPages={setTotalPages}
+												hasNextPage={hasNextPage}
+											/>
+										</div>
+									</div>
 								</>
 							}
 						></Route>
+					) : (
+						<Route path="/mainList" element={<></>}></Route>
 					)}
 					{watchedArr !== null ? (
 						<Route

@@ -21,7 +21,6 @@ const ConfirmModal = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body className="text-center">
-					{/* <Button variant="danger" className="mx-2" onClick={props.rmvJob}> */}
 					<Button variant="danger" className="mx-2" onClick={() => removeAndHide()}>
 						Remove
 					</Button>
