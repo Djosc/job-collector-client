@@ -1,6 +1,6 @@
-.App {
+/* .App {
 	background-color: #f2f2f2;
-}
+} */
 
 .search-bar-wrap {
 	background-color: #002642;
@@ -11,7 +11,7 @@
 }
 
 .card {
-	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -20,7 +20,7 @@
 }
 
 .card-footer {
-	background-color: #dddddd;
+	background-color: #f2f2f2;
 }
 
 .btn-primary {
@@ -42,4 +42,17 @@
 
 .main-card-button-wrap {
 	text-align: center;
+}
+
+.pagination-wrap {
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.pagination-el {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 3rem;
 }
