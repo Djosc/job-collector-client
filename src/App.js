@@ -17,7 +17,7 @@ function App() {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
-	const [hasNextPage, setHasNextPage] = useState(false);
+	const [hasNextPage, setHasNextPage] = useState(true);
 	const [jobsPerPage, setJobsPerPage] = useState(15);
 
 	const [effectTrigger, setEffectTrigger] = useState(false);
@@ -61,6 +61,7 @@ function App() {
 			.catch((err) => console.log(err));
 	};
 
+	// Slice off one page of jobs and store it with setCurrentJobsArr
 	const setCurrentJobs = () => {
 		const indexOfLastJob = currentPage * jobsPerPage;
 		const indexOfFirstJob = indexOfLastJob - jobsPerPage;
@@ -73,11 +74,12 @@ function App() {
 		});
 	};
 
+	// This will run when allJobsArr populates and when the current page changes
 	useEffect(() => {
 		if (allJobsArr === null) return;
 
 		setCurrentJobs();
-	}, [allJobsArr]);
+	}, [allJobsArr, currentPage]);
 
 	const handlePageSwitch = ({ page }) => {};
 
@@ -197,7 +199,7 @@ function App() {
 												hasNextPage={hasNextPage}
 											/>
 										</div>
-										<h1 className="text-center mt-4">Job Results</h1>
+										<h1 className="text-center my-4">Job Results</h1>
 									</div>
 									<MainList
 										currentJobsArr={currentJobsArr}
