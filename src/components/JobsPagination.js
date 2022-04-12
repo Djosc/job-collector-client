@@ -13,7 +13,6 @@ const JobsPagination = ({ currentPage, setCurrentPage, totalPages }) => {
 
 	return (
 		<Pagination>
-			{/* {currentPage !== 1 && <Pagination.Prev onClick={() => adjustPage(-1)} />} */}
 			{currentPage !== 1 && (
 				<Pagination.Item onClick={() => setCurrentPage(1)}>1</Pagination.Item>
 			)}
@@ -27,7 +26,6 @@ const JobsPagination = ({ currentPage, setCurrentPage, totalPages }) => {
 			{checkForNextPage() && (
 				<Pagination.Item onClick={() => adjustPage(1)}>{currentPage + 1}</Pagination.Item>
 			)}
-			{/* {checkForNextPage() && <Pagination.Next onClick={() => adjustPage(1)} />} */}
 		</Pagination>
 	);
 };

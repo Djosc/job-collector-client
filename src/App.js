@@ -97,7 +97,6 @@ function App() {
 
 	const checkApplied = (job) => {
 		const { applied } = job;
-		// console.log(job.applied);
 		if (applied === true) {
 			return true;
 		}
@@ -136,6 +135,7 @@ function App() {
 		console.log(data);
 	};
 
+	// Takes in a job from the watch list map function and marks it as applied
 	const markApplied = async (job) => {
 		const data = await axios.put('http://localhost:8080/markApplied', {
 			description: job.description,
@@ -145,6 +145,7 @@ function App() {
 		console.log(data);
 	};
 
+	// Takes in a job from the watch list map function and un-marks it as applied
 	const unmarkApplied = async (job) => {
 		const data = await axios.put('http://localhost:8080/unmarkApplied', {
 			description: job.description,
