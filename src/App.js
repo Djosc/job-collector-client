@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -7,6 +7,8 @@ import SearchBar from './components/SearchBar';
 import MainList from './components/MainList';
 import WatchList from './components/WatchList';
 import JobsPagination from './components/JobsPagination';
+
+import { BiCaretUpCircle } from 'react-icons/bi';
 
 import './App.css';
 
@@ -17,8 +19,7 @@ function App() {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
-	const [hasNextPage, setHasNextPage] = useState(true);
-	const [jobsPerPage, setJobsPerPage] = useState(15);
+	const [jobsPerPage] = useState(15);
 
 	const [effectTrigger, setEffectTrigger] = useState(false);
 
@@ -48,42 +49,40 @@ function App() {
 		queryUrl += '&sort=' + sort;
 		queryUrl += '&pages=' + numberOfPages;
 
-		setTotalPages(numberOfPages);
-
 		axios
 			.get(queryUrl)
 			.then((data) => {
+				console.log(allJobsArr);
 				setAllJobsArr({
 					allJobsArr: data.data,
 				});
+				setTotalPages(numberOfPages);
+				setCurrentPage(1);
 			})
 			.catch((err) => console.log(err));
 	};
 
 	// Slice off one page of jobs and store it with setCurrentJobsArr
-	const setCurrentJobs = () => {
+	const setCurrentJobs = useCallback(() => {
 		const indexOfLastJob = currentPage * jobsPerPage;
 		const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 		const currentJobs = allJobsArr.allJobsArr.slice(indexOfFirstJob, indexOfLastJob);
 
-		console.log(currentJobs);
+		console.log('Current jobs: ', currentJobs);
 
 		setCurrentJobsArr({
 			currentJobsArr: currentJobs,
 		});
-
-		let hasNextPageBool = totalPages > currentPage ? true : false;
-		setHasNextPage(hasNextPageBool);
-	};
+	}, [currentPage, allJobsArr, jobsPerPage]);
 
 	// This will run when allJobsArr populates and when the current page changes
 	useEffect(() => {
-		if (allJobsArr === null) return;
-
+		if (allJobsArr === null) {
+			console.log('hi. allJobsArr is null');
+			return;
+		}
 		setCurrentJobs();
-	}, [allJobsArr, currentPage]);
-
-	const handlePageSwitch = ({ page }) => {};
+	}, [allJobsArr, currentPage, setCurrentJobs]);
 
 	const checkWatchedArr = (job) => {
 		const { description } = job;
@@ -98,7 +97,6 @@ function App() {
 
 	const checkApplied = (job) => {
 		const { applied } = job;
-		// console.log(job.applied);
 		if (applied === true) {
 			return true;
 		}
@@ -137,6 +135,7 @@ function App() {
 		console.log(data);
 	};
 
+	// Takes in a job from the watch list map function and marks it as applied
 	const markApplied = async (job) => {
 		const data = await axios.put('http://localhost:8080/markApplied', {
 			description: job.description,
@@ -146,6 +145,7 @@ function App() {
 		console.log(data);
 	};
 
+	// Takes in a job from the watch list map function and un-marks it as applied
 	const unmarkApplied = async (job) => {
 		const data = await axios.put('http://localhost:8080/unmarkApplied', {
 			description: job.description,
@@ -153,6 +153,10 @@ function App() {
 		});
 		setEffectTrigger(!effectTrigger);
 		console.log(data);
+	};
+
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	};
 
 	const openFullJob = (link) => {
@@ -197,8 +201,6 @@ function App() {
 												currentPage={currentPage}
 												setCurrentPage={setCurrentPage}
 												totalPages={totalPages}
-												setTotalPages={setTotalPages}
-												hasNextPage={hasNextPage}
 											/>
 										</div>
 										<h1 className="text-center my-4">Job Results</h1>
@@ -220,8 +222,13 @@ function App() {
 												currentPage={currentPage}
 												setCurrentPage={setCurrentPage}
 												totalPages={totalPages}
-												setTotalPages={setTotalPages}
-												hasNextPage={hasNextPage}
+											/>
+										</div>
+										<div></div>
+										<div className="icon-wrap">
+											<BiCaretUpCircle
+												className="up-icon"
+												onClick={() => scrollToTop()}
 											/>
 										</div>
 									</div>
@@ -229,7 +236,14 @@ function App() {
 							}
 						></Route>
 					) : (
-						<Route path="/mainList" element={<></>}></Route>
+						<Route
+							path="/mainList"
+							element={
+								<>
+									<h1 className="text-center my-4">Loading...</h1>
+								</>
+							}
+						></Route>
 					)}
 					{watchedArr !== null ? (
 						<Route
